@@ -14,4 +14,24 @@ public class Item {
         this.itemPromotion = itemPromotion;
         this.itemEtc= itemEtc;
     }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public int getItemPrice() {
+        return itemPrice;
+    }
+
+    public int getItemQuantity() {
+        return itemQuantity;
+    }
+
+    public String getItemPromotion() {
+        return itemPromotion;
+    }
+
+    public String getItemEtc() {
+        return itemEtc;
+    }
 }
