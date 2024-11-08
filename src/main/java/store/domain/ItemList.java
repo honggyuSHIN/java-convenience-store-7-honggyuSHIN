@@ -1,5 +1,9 @@
 package store.domain;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,25 +15,49 @@ public class ItemList {
     }
 
     public List<Item> saveItems() {
-        items.add(new Item("콜라", 1000, 10, "탄산2+1", null));
-        items.add(new Item("콜라", 1000, 10, null, null));
-        items.add(new Item("사이다", 1000, 8, "탄산2+1", null));
-        items.add(new Item("사이다", 1000, 7, null, null));
-        items.add(new Item("오렌지주스", 1800, 9, null, "MD추천상품"));
-        items.add(new Item("오렌지주스", 1800, 0, null, null));
-        items.add(new Item("탄산수", 1200, 5, "탄산2+1", null));
-        items.add(new Item("탄산수", 1200, 0, null, null));
-        items.add(new Item("물", 500, 10, null, null));
-        items.add(new Item("비타민워터", 1500, 6, null, null));
-        items.add(new Item("감자칩", 1500, 5, null, "반짝할인"));
-        items.add(new Item("감자칩", 1500, 5, null, null));
-        items.add(new Item("초코바", 1200, 5, null, "MD추천상품"));
-        items.add(new Item("초코바", 1200, 5, null, null));
-        items.add(new Item("에너지바", 2000, 5, null, null));
-        items.add(new Item("정식도시락", 6400, 8, null, null));
-        items.add(new Item("컵라면", 1700, 1, null, "MD추천상품"));
-        items.add(new Item("컵라면", 1700, 10, null, null));
-
+        try{
+            List<String> productsLines = Files.readAllLines(Paths.get("src/main/resources/products.md"));
+            for (String line : productsLines.subList(1, productsLines.size())) {
+                String[] item = line.split(",");
+                addItem(item);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
         return items;
+    }
+
+    public void addItem(String[] item) {
+        String itemName = item[0];
+        int itemPrice = Integer.parseInt(item[1]);
+        int itemQuantity = Integer.parseInt(item[2]);
+        if (!item[3].equals("null")) {
+            String itemPromotion = item[3];
+            try {
+                items.add(new Item(itemName, itemPrice, itemQuantity, savePromotions(itemPromotion)));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            items.add(new Item(itemName, itemPrice, itemQuantity, null));
+        }
+
+    }
+
+    private ItemPromotion savePromotions(String itemPromotion) {
+        ItemPromotion itemPromotionData = null;
+        try {
+            List<String> promotionsLines = Files.readAllLines(Paths.get("src/main/resources/promotions.md"));
+            for (String line : promotionsLines.subList(1, promotionsLines.size())) {
+                String[] promotion = line.split(",");
+                if (promotion[0].equals(itemPromotion)) {
+                    itemPromotionData = new ItemPromotion(promotion[0], Integer.parseInt(promotion[1]), Integer.parseInt(promotion[2]), LocalDate.parse(promotion[3]), LocalDate.parse(promotion[4]));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("오류 발생");
+            e.printStackTrace();
+        }
+        return itemPromotionData;
     }
 }
