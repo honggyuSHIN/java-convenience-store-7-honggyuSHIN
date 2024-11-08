@@ -1,18 +1,19 @@
 package store.domain;
 
+import java.time.LocalDate;
+
 public class Item {
     private final String itemName;
     private final int itemPrice;
     private final int itemQuantity;
-    private final String itemPromotion;
-    private final String itemEtc;
+    private final ItemPromotion itemPromotion;
 
-    public Item(String itemName, int itemPrice, int itemQuantity, String itemPromotion, String itemEtc) {
+
+    public Item(String itemName, int itemPrice, int itemQuantity, ItemPromotion itemPromotion) {
         this.itemName = itemName;
         this.itemPrice = itemPrice;
         this.itemQuantity = itemQuantity;
         this.itemPromotion = itemPromotion;
-        this.itemEtc= itemEtc;
     }
 
     public String getItemName() {
@@ -28,10 +29,11 @@ public class Item {
     }
 
     public String getItemPromotion() {
-        return itemPromotion;
+        if(itemPromotion == null) {
+            return null;
+        }
+        return itemPromotion.getPromotionName();
     }
 
-    public String getItemEtc() {
-        return itemEtc;
-    }
+
 }
