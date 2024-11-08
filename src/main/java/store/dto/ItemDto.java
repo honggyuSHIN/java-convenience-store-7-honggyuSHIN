@@ -5,14 +5,13 @@ public class ItemDto {
     private final int itemPrice;
     private final int itemQuantity;
     private final String itemPromotion;
-    private final String itemEtc;
 
-    public ItemDto(String itemName, int itemPrice, int itemQuantity, String itemPromotion, String itemEtc) {
+
+    public ItemDto(String itemName, int itemPrice, int itemQuantity, String itemPromotion) {
         this.itemName = itemName;
         this.itemPrice = itemPrice;
         this.itemQuantity = itemQuantity;
         this.itemPromotion = itemPromotion;
-        this.itemEtc = itemEtc;
     }
 
     public String getItemName() {
@@ -29,9 +28,5 @@ public class ItemDto {
 
     public String getItemPromotion() {
         return itemPromotion;
-    }
-
-    public String getItemEtc() {
-        return itemEtc;
     }
 }
