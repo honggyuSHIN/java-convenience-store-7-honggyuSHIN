@@ -12,7 +12,9 @@ public class ItemService {
     public List<ItemDto> saveItemList() {
         ItemList itemList = new ItemList();
         List<Item> items = itemList.saveItems();
-        return items.stream().map(Item -> new ItemDto(Item.getItemName(), Item.getItemPrice(), Item.getItemQuantity(), Item.getItemPromotion(), Item.getItemEtc())).toList();
-    }
+        return items.stream().map(item -> {
+            return new ItemDto(item.getItemName(), item.getItemPrice(), item.getItemQuantity(), item.getItemPromotion());
+        }).toList();
 
+    }
 }
