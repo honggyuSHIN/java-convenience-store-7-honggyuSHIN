@@ -1,11 +1,9 @@
 package store.domain;
 
-import java.time.LocalDate;
-
 public class Item {
     private final String itemName;
     private final int itemPrice;
-    private final int itemQuantity;
+    private int itemQuantity;
     private final ItemPromotion itemPromotion;
 
 
@@ -28,11 +26,22 @@ public class Item {
         return itemQuantity;
     }
 
-    public String getItemPromotion() {
+    public String getItemPromotionName() {
         if(itemPromotion == null) {
             return null;
         }
         return itemPromotion.getPromotionName();
+    }
+
+    public ItemPromotion getItemPromotion() {
+        return itemPromotion;
+    }
+
+    public void buyItem(Integer quantity) {
+        if (itemQuantity < quantity) {
+            throw new IllegalArgumentException("구매할 수량이 재고보다 많습니다.");
+        }
+        itemQuantity -= quantity;
     }
 
 
