@@ -20,4 +20,12 @@ public class ItemPromotion {
     public String getPromotionName() {
         return promotionName;
     }
+
+    public int getBuyItemCount() {
+        return buyItemCount;
+    }
+
+    public int getFreeItemCount() {
+        return freeItemCount;
+    }
 }
