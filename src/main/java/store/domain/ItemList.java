@@ -60,4 +60,8 @@ public class ItemList {
         }
         return itemPromotionData;
     }
+
+    public List<Item> getItems() {
+        return items;
+    }
 }
