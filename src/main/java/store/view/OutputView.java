@@ -37,12 +37,12 @@ public class OutputView {
         int membershipDiscount = 0;
         List<UserBuyItemsDto> freeItems = new ArrayList<>();
         for (UserBuyItemsDto item : userBuyItemsDtos) {
-            System.out.printf("%-10s\t%-5d\t%,d%n", item.getItemName(), item.getItemQuantity(), item.getItemPrice()*item.getItemQuantity());
+            System.out.printf("%-10s\t%-5d\t%,d%n", item.getItemName(), item.getItemQuantity(), item.getItemPrice() * item.getItemQuantity());
             totalQuantity += item.getItemQuantity();
-            totalPrice += item.getItemPrice()*item.getItemQuantity();
+            totalPrice += item.getItemPrice() * item.getItemQuantity();
             if (item.getItemPromotionType() != null) {
                 freeItems.add(item);
-                if(item.getItemPromotionType().equals("탄산2+1")){
+                if (item.getItemPromotionType().equals("탄산2+1")) {
                     eventDiscount += item.getItemPrice() * item.getItemQuantity() / 3;
                     continue;
                 }
@@ -50,28 +50,23 @@ public class OutputView {
                 continue;
             }
             if (item.getItemPromotionType() == null) {
-                if(isMembership){
+                if (isMembership) {
                     membershipDiscount += item.getItemPrice() * item.getItemQuantity() / 10;
                 }
             }
         }
         System.out.println("=============증정===============");
         for (UserBuyItemsDto freeItem : freeItems) {
-            if(freeItem.getItemPromotionType().equals("탄산2+1")){
+            if (freeItem.getItemPromotionType().equals("탄산2+1")) {
                 System.out.printf("%-10s\t%-5d\t%,d%n", freeItem.getItemName(), freeItem.getItemQuantity() / 3, freeItem.getItemPrice());
                 continue;
             }
-            System.out.printf("%-10s\t%-5d\t%,d%n", freeItem.getItemName(), freeItem.getItemQuantity()/2, freeItem.getItemPrice());
+            System.out.printf("%-10s\t%-5d\t%,d%n", freeItem.getItemName(), freeItem.getItemQuantity() / 2, freeItem.getItemPrice());
         }
         System.out.println("================================");
         System.out.printf("%-10s\t%-5d\t%,d%n", "총구매액", totalQuantity, totalPrice);
         System.out.printf("%-10s\t%-5s\t%,d%n", "행사할인", "", eventDiscount);
         System.out.printf("%-10s\t%-5s\t%,d%n", "멤버십할인", "\t\t", membershipDiscount);
         System.out.printf("%-10s\t\t%,d%n", "내실돈", totalPrice - eventDiscount - membershipDiscount);
-
-
-
     }
-
-
 }

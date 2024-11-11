@@ -12,7 +12,7 @@ public class ItemCheckService {
         List<Item> itemsMatchingName = new ArrayList<>();
         for (Item item : items) {
             if (item.getItemName().equals(purchaseItem.getKey())) {
-                
+
                 itemsMatchingName.add(item);
             }
         }
@@ -24,7 +24,7 @@ public class ItemCheckService {
         for (Item item : items) {
             if (item.getItemPromotionName() != null) {
                 if (item.getItemQuantity() > 0) {
-                    isPromotionPossible=true;
+                    isPromotionPossible = true;
                 }
             }
         }
@@ -63,7 +63,7 @@ public class ItemCheckService {
     public boolean checkQuantity(Map.Entry<String, Integer> purchaseItem, List<Item> items) {
         boolean itemQuantityPossible = false;
         for (Item item : items) {
-            itemQuantityPossible = (item.getItemQuantity()>=purchaseItem.getValue());
+            itemQuantityPossible = (item.getItemQuantity() >= purchaseItem.getValue());
         }
         return itemQuantityPossible;
     }

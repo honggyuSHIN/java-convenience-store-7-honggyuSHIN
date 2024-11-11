@@ -13,7 +13,7 @@ public class InputView {
         return Console.readLine();
     }
 
-    public static String askAboutMembership(){
+    public static String askAboutMembership() {
         System.out.println("멤버십 할인을 받으시겠습니까? (Y/N)");
         return Console.readLine();
     }

@@ -15,13 +15,13 @@ public class ItemList {
     }
 
     public List<Item> saveItems() {
-        try{
+        try {
             List<String> productsLines = Files.readAllLines(Paths.get("src/main/resources/products.md"));
             for (String line : productsLines.subList(1, productsLines.size())) {
                 String[] item = line.split(",");
                 addItem(item);
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return items;

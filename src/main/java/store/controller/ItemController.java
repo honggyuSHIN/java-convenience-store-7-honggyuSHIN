@@ -35,15 +35,13 @@ public class ItemController {
     }
 
     public void run(List<Item> items, UserBuyItemsList userBuyItemsList) {
-        List<ItemDto> itemsDto=itemService.getItemsDto(items);
+        List<ItemDto> itemsDto = itemService.getItemsDto(items);
         OutputView.printItemList(itemsDto);
         boolean isMembership = false;
         Map<String, Integer> userRequestProducts = itemService.productInput();
-        for(Map.Entry<String, Integer> entry : userRequestProducts.entrySet()) {
+        for (Map.Entry<String, Integer> entry : userRequestProducts.entrySet()) {
             List<Item> itemsMatchingName = itemCheckService.checkNameMatching(entry, items);
-            System.out.println("itemsMatchingName.size() = " + itemsMatchingName.size());
             String nowItemSituation = matchItems(itemsMatchingName, entry);
-            System.out.println("nowItemSituation = " + nowItemSituation);
             if (nowItemSituation == PromotionEnum.NON_PROMOTION_FULL_QUANTITY) {
 
                 isMembership = buyGeneralItem(nowItemSituation, itemsMatchingName, entry, userBuyItemsList);
@@ -51,16 +49,16 @@ public class ItemController {
             if (nowItemSituation == PromotionEnum.NON_PROMOTION_INSUFFICIENT_QUANTITY) {
                 OutputView.printInsufficientQuantity(itemsMatchingName.get(0).getItemName(), itemsMatchingName.get(0).getItemQuantity());
             }
-            if(nowItemSituation==PromotionEnum.YES_PROMOTION_FULL_QUANTITY_FULL_CONDITION){
+            if (nowItemSituation == PromotionEnum.YES_PROMOTION_FULL_QUANTITY_FULL_CONDITION) {
                 buySufficientPromotionCondition(itemsMatchingName, entry, userBuyItemsList);
             }
-            if(nowItemSituation==PromotionEnum.YES_PROMOTION_INSUFFICIENT_QUANTITY){
+            if (nowItemSituation == PromotionEnum.YES_PROMOTION_INSUFFICIENT_QUANTITY) {
 
-                int insufficientQuantity = entry.getValue()-itemsMatchingName.get(0).getItemQuantity();
+                int insufficientQuantity = entry.getValue() - itemsMatchingName.get(0).getItemQuantity();
                 String userChoice = InputView.printInsufficientPromotionQuantity(itemsMatchingName.get(0).getItemName(), insufficientQuantity);
-                isMembership = buyInsufficientQuantity(userChoice ,insufficientQuantity, itemsMatchingName, entry , userBuyItemsList);
+                isMembership = buyInsufficientQuantity(userChoice, insufficientQuantity, itemsMatchingName, entry, userBuyItemsList);
             }
-            if(nowItemSituation==PromotionEnum.YES_PROMOTION_INSUFFICIENT_CONDITION){
+            if (nowItemSituation == PromotionEnum.YES_PROMOTION_INSUFFICIENT_CONDITION) {
                 try {
                     isMembership = buyInsufficientCondition(itemsMatchingName, entry, userBuyItemsList);
                 } catch (IllegalArgumentException e) {
@@ -69,7 +67,7 @@ public class ItemController {
             }
         }
         List<UserBuyItemsDto> userBuyItemsDtos = new ArrayList<>();
-        for(UserBuyItems userBuyItems : userBuyItemsList.getUserBuyItemsList()){
+        for (UserBuyItems userBuyItems : userBuyItemsList.getUserBuyItemsList()) {
             userBuyItemsDtos.add(new UserBuyItemsDto(userBuyItems.getItemName(), userBuyItems.getItemQuantity(), userBuyItems.getItemPromotionType(), userBuyItems.getItemPrice()));
         }
 
@@ -95,7 +93,7 @@ public class ItemController {
 
     private void buySufficientPromotionCondition(List<Item> itemsMatchingName, Map.Entry<String, Integer> entry, UserBuyItemsList userBuyItemsList) {
         itemService.buyItem(itemsMatchingName.get(0), entry);
-        itemReciptService.addRecipt(userBuyItemsList, new UserBuyItems(itemsMatchingName.get(0).getItemName(), entry.getValue(),itemsMatchingName.get(0).getItemPromotionName(), itemsMatchingName.get(0).getItemPrice()));
+        itemReciptService.addRecipt(userBuyItemsList, new UserBuyItems(itemsMatchingName.get(0).getItemName(), entry.getValue(), itemsMatchingName.get(0).getItemPromotionName(), itemsMatchingName.get(0).getItemPrice()));
     }
 
     public boolean buyInsufficientQuantity(String userChoice, int insufficientQuantity, List<Item> itemsMatchingName, Map.Entry<String, Integer> entry, UserBuyItemsList userBuyItemsList) {
@@ -114,7 +112,7 @@ public class ItemController {
     }
 
     public List<Item> itemSave() {
-        ItemList itemList=new ItemList();
+        ItemList itemList = new ItemList();
         return itemService.saveItemList(itemList);
     }
 

@@ -27,7 +27,7 @@ public class Item {
     }
 
     public String getItemPromotionName() {
-        if(itemPromotion == null) {
+        if (itemPromotion == null) {
             return null;
         }
         return itemPromotion.getPromotionName();
